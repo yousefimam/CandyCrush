@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class Candy extends JLabel {
     int x , y;
+    private static int b = 0 , p = 0 , r = 0 , yl = 0 , g = 0 ;
     String imagesrc;
 
     public Candy(int x , int y) {
@@ -50,23 +51,48 @@ public class Candy extends JLabel {
 //                System.out.println("Moved To : " + " " + candy.geti() + " " + candy.getj());
 //            }
 //        });
+
+    }
+
+
+    public String getImagesrc() {
+        return imagesrc;
+    }
+
+    public void setImagesrc(String imagesrc) {
+        this.imagesrc = imagesrc;
+        setIcon(new ImageIcon(getClass().getResource(imagesrc)));
     }
 
     private String RandShape (){
         Random random = new Random();
-        switch (random.nextInt() % 5){
-            case 0:
-                return Candies.BLUECANDY.path;
-            case 1:
-                return Candies.GREENCANDY.path;
-            case 2:
-                return Candies.REDCANDY.path;
-            case 3:
-                return Candies.YELLOWNDY.path;
-            case 4:
-                return Candies.PURPLECANDY.path;
+        String result = null;
+        while(result == null){
+
+            switch (random.nextInt() % 5){
+                case 0:
+                    if (b < 14) result = Candies.BLUECANDY.path;
+                    b++;
+                    break;
+                case 1:
+                    if (g < 14) result = Candies.GREENCANDY.path;
+                    g++;
+                    break;
+                case 2:
+                    if (r < 14) result = Candies.REDCANDY.path;
+                    r++;
+                    break;
+                case 3:
+                    if (yl < 14) result = Candies.YELLOWNDY.path;
+                    yl++;
+                    break;
+                case 4:
+                    if (p < 14) result = Candies.PURPLECANDY.path;
+                    p++;
+                    break;
+            }
         }
-        return Candies.PURPLECANDY.path;
+        return result;
     }
     public int geti() {
         return x;

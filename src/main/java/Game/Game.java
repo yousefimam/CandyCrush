@@ -15,16 +15,16 @@ public class Game extends JPanel implements ActionListener {
     Candy [][] candies;
     public Game (){
         candies = new Candy [8][8];
-        int fromx , fromy , tox , toy;
         setFocusable(true);
         setLayout(new GridLayout(8 ,8));
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Candy candy = new Candy(i , j);
                 candies[i][j] = candy;
-                add(candy);
+                add(candies[i][j]);
             }
         }
+
         addMouseListener(new MouseAdapter() {
             int fromx , fromy , tox , toy;
 
@@ -46,11 +46,21 @@ public class Game extends JPanel implements ActionListener {
                 tox = candy.geti();
                 toy = candy.getj();
                 System.out.println(" " + tox + " " + toy);
-                if (Math.abs(fromx - tox) == 1 || Math.abs(fromy - toy) == 1){
+                if ((Math.abs(fromx - tox) == 1 && (fromy - toy) == 0) || (Math.abs(fromy - toy) == 1) && (fromx - tox) == 0){
                     Candy temp;
                     temp = candies[fromx][fromy];
                     candies[fromx][fromy] = candies[tox][toy];
+                    candies[fromx][fromy].setXY(fromx , fromy);
+                    temp.setXY(tox , toy);
                     candies[tox][toy] = temp;
+//                   candies[fromx][fromy].setImagesrc(candies[tox][toy].getImagesrc());
+//                   candies[tox][toy].setImagesrc(temp);
+                    removeAll();
+                    for (int i = 0; i < 8; i++) {
+                        for (int j = 0; j < 8; j++) {
+                            add(candies[i][j]);
+                        }
+                    }
                 }
             }
         });
@@ -78,18 +88,20 @@ public class Game extends JPanel implements ActionListener {
 
 
     public void paint(Graphics g){
-        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                candies[i][j].paint(g2d);
+                candies[i][j].revalidate();
+                candies[i][j].repaint();
             }
         }
+        super.paint(g);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        revalidate();
         repaint();
     }
 
