@@ -5,23 +5,22 @@ import GameObjects.Candy;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 ;
 public class Game extends JPanel implements ActionListener {
-
+    public static final int Rows = 12 , Col = 8;
     public static final long serialVersionId = 1l;
     Timer gameloop = new Timer(50 , this);
     Candy [][] candies;
     public Game (){
-        candies = new Candy [8][8];
+        candies = new Candy [Rows][Col];
         setFocusable(true);
-        setLayout(new GridLayout(8 ,8));
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        setLayout(new GridLayout(Rows - 4 , Col));
+        for (int i = 0; i < Rows; i++) {
+            for (int j = 0; j < Col; j++) {
                 Candy candy = new Candy(i , j);
                 candies[i][j] = candy;
-                add(candies[i][j]);
+                if(i > 3) add(candies[i][j]);
             }
         }
 
@@ -56,8 +55,8 @@ public class Game extends JPanel implements ActionListener {
 //                   candies[fromx][fromy].setImagesrc(candies[tox][toy].getImagesrc());
 //                   candies[tox][toy].setImagesrc(temp);
                     removeAll();
-                    for (int i = 0; i < 8; i++) {
-                        for (int j = 0; j < 8; j++) {
+                    for (int i = 4; i < Rows; i++) {
+                        for (int j = 0; j < Col; j++) {
                             add(candies[i][j]);
                         }
                     }
@@ -86,16 +85,22 @@ public class Game extends JPanel implements ActionListener {
     }
 
 
-
+    //    public void checkMatches(){
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 6; j++) {
+//
+//            }
+//        }
+//    }
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                candies[i][j].revalidate();
-                candies[i][j].repaint();
-            }
-        }
         super.paint(g);
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                candies[i][j].revalidate();
+//                candies[i][j].repaint();
+//            }
+//        }
     }
 
 

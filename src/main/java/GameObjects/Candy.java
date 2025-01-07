@@ -1,25 +1,22 @@
 package GameObjects;
 
 import Game.Candies;
-import Game.GlobalPosition;
+import Game.Game;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.Random;
 
 
 public class Candy extends JLabel {
-    int x , y;
+    int x , y , imageval;
     private static int b = 0 , p = 0 , r = 0 , yl = 0 , g = 0 ;
+
+    private static int cap = (int) Math.ceil((double) (Game.Rows * Game.Col) / 5);
     String imagesrc;
 
     public Candy(int x , int y) {
         this.x = x;
         this.y = y;
-        Random r;
         imagesrc = RandShape();
         setIcon(new ImageIcon(getClass().getResource(imagesrc)));
 //        addMouseListener(new MouseAdapter() {
@@ -71,29 +68,39 @@ public class Candy extends JLabel {
 
             switch (random.nextInt() % 5){
                 case 0:
-                    if (b < 14) result = Candies.BLUECANDY.path;
+                    if (b < cap) result = Candies.BLUECANDY.path;
+                    imageval = Candies.BLUECANDY.val;
                     b++;
                     break;
                 case 1:
-                    if (g < 14) result = Candies.GREENCANDY.path;
+                    if (g < cap) result = Candies.GREENCANDY.path;
+                    imageval = Candies.GREENCANDY.val;
                     g++;
                     break;
                 case 2:
-                    if (r < 14) result = Candies.REDCANDY.path;
+                    if (r < cap) result = Candies.REDCANDY.path;
+                    imageval = Candies.REDCANDY.val;
                     r++;
                     break;
                 case 3:
-                    if (yl < 14) result = Candies.YELLOWNDY.path;
+                    if (yl < cap) result = Candies.YELLOWNDY.path;
+                    imageval = Candies.YELLOWNDY.val;
                     yl++;
                     break;
                 case 4:
-                    if (p < 14) result = Candies.PURPLECANDY.path;
+                    if (p < cap) result = Candies.PURPLECANDY.path;
+                    imageval = Candies.PURPLECANDY.val;
                     p++;
                     break;
             }
         }
         return result;
     }
+
+    public int getImageval() {
+        return imageval;
+    }
+
     public int geti() {
         return x;
     }
