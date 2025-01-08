@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class Candy extends JLabel {
     int x , y , imageval;
+
+    Boolean match = false;
     private static int b = 0 , p = 0 , r = 0 , yl = 0 , g = 0 ;
 
     private static int cap = (int) Math.ceil((double) (Game.Rows * Game.Col) / 5);
@@ -61,6 +63,10 @@ public class Candy extends JLabel {
         setIcon(new ImageIcon(getClass().getResource(imagesrc)));
     }
 
+    public int getImageval() {
+        return imageval;
+    }
+
     private String RandShape (){
         Random random = new Random();
         String result = null;
@@ -94,11 +100,15 @@ public class Candy extends JLabel {
                     break;
             }
         }
-        return result;
-    }
+        if(b < cap - 2 && yl < cap - 2 && g < cap - 2 && p < cap - 2 && r < cap - 2){
+            b = 0;
+            g = 0;
+            yl = 0;
+            p = 0;
+            r = 0;
+        }
 
-    public int getImageval() {
-        return imageval;
+        return result;
     }
 
     public int geti() {
@@ -114,16 +124,11 @@ public class Candy extends JLabel {
         this.y = y;
     }
 
-    public void update(){
-
+    public Boolean getMatch() {
+        return match;
     }
 
-//    public void draw(Graphics2D g2d){
-//        g2d.drawImage(objImage() ,null , null);
-//    }
-//
-//    public Image objImage (){
-//        ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagesrc));
-//        return imageIcon.getImage();
-//    }
+    public void setMatch(Boolean match) {
+        this.match = match;
+    }
 }
